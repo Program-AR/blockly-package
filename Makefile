@@ -10,6 +10,6 @@ version:
 	git push --tags
 
 actualizar:
-	git submodule foreach git pull origin master
+	git submodule update --remote --merge
 
 
