@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Blockly Demo: Mike languages</title>
+  <script src="../../blockly_compressed.js"></script>
+  <script src="../..//blocks_compressed.js"></script>
+    <script src="js/javascript_compressed.js"></script>
+  <script src="js/en.js"></script>
+  <script src="my_blocks.js"></script>
+  <script src="my_language_generator.js"></script>
+  <script src="another_language_generator.js"></script>
+  <script src="js/acorn_interpreter.js"></script>
+  <script>
+    // Generar el codigo según el lenguaje seleccionado
+    function generateCode()
+    {
+      var languages = {
+        "MyLanguage": Blockly.MyLanguage,
+        "AnotherLanguage": Blockly.AnotherLanguage
+      };
+
+      var lang = languages[document.getElementById('language').value];
+
+      lang.addReservedWords('code');
+      var code = lang.workspaceToCode(workspace);
+      document.getElementById('codeTextDiv').innerHTML = '<pre>'+code+'</pre>';
+      return code;
+    }
+
+    // Ejecutar el codigo en el interprete JS
+    // Bindings para poder interactuar con el mundo fuera del interprete
+    function executeCode()
+    {
+      //.style.backgroundColor = "red";
+      // Generar codigo
+      var code = generateCode();
+
+      // Funcion para configurar interprete, bindings interprete<->browser
+      var initFunc = function(interpreter, scope) {
+        // Add an API function for highlighting blocks.
+        var wrapper = function(id) {
+          id = id ? id.toString() : '';
+          return interpreter.createPrimitive(workspace.highlightBlock(id));
+        };
+        interpreter.setProperty(scope, 'highlightBlock',
+          interpreter.createNativeFunction(wrapper));
+
+        var setColorWrapper = function(text, callback) {
+          text = text ? text.toString() : '';
+          interpreter.createPrimitive(document.getElementById('playAreaDiv').style.backgroundColor = text);
+          interpreter.createPrimitive(console.log("color", text));
+          interpreter.createPrimitive(setTimeout(callback,1000));
+        };
+        interpreter.setProperty(scope, 'setColor',
+          interpreter.createAsyncFunction(setColorWrapper));
+      };
+
+      // Instanciar interprete
+      var myInterpreter = new Interpreter(code, initFunc);
+
+      workspace.traceOn(true);
+      workspace.highlightBlock(null);
+      runTheCode(myInterpreter);
+    }
+
+    // Correr el interprete hasta terminar
+    function runTheCode(myInterpreter) {
+      if (myInterpreter.run()) {
+        setTimeout(runTheCode, 10, myInterpreter);
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #fff;
+      font-family: sans-serif;
+    }
+    h1 {
+      font-weight: normal;
+      font-size: 140%;
+    }
+  </style>
+</head>
+<body>
+  <div id="blocklyDiv" style="height: 480px; width: 600px; float:left;"></div>
+  <div id="codeDiv" style="height: 480px; width: 600px; float:left;">
+    <select id="language">
+      <option value="MyLanguage">MyLanguage</option>
+      <option value="AnotherLanguage">AnotherLanguage</option>
+    </select>
+    <button onclick="generateCode();">
+      Generar código
+    </button>
+    <button onclick="executeCode();">
+      Ejecutar
+    </button>
+    <div id="codeTextDiv"></div>
+    <div id="playAreaDiv" style="width:50px; height:50px;"></div>
+  </div>
+  <xml id="toolbox" style="display: none">
+    <block type="controls_repeat_ext"></block>
+    <block type="math_number"></block>
+    <block type="set_color"></block>
+    <block type="red_color"></block>
+    <block type="green_color"></block>
+  </xml>
+
+  <script>
+    var workspace = Blockly.inject('blocklyDiv',
+        {media: 'media/',
+         toolbox: document.getElementById('toolbox')});
+
+     function highlightBlock(id) {
+       workspace.highlightBlock(id);
+     }
+  </script>
+
+
+</body>
+</html>
