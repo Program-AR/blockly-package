@@ -13,6 +13,7 @@
     "bower_components",
     "test",
     "blockly",
-    "tests"
+    "tests",
+    "demos"
   ]
 }
