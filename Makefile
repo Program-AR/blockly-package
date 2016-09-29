@@ -38,3 +38,4 @@ actualizar: blockly
 	cp blockly/blockly_compressed.js ./
 	cp blockly/blocks_compressed.js ./
 	cp blockly/msg/js/es.js ./
+	cp blockly/javascript_compressed.js ./
