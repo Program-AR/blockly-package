@@ -36,6 +36,7 @@ actualizar: blockly
 	@echo "${G}actualizando blockly a la última versión...${N}"
 	git submodule update --remote --merge
 	cp blockly/blockly_compressed.js ./
+	cp blockly/blockly_uncompressed.js ./
 	cp blockly/blocks_compressed.js ./
 	cp blockly/msg/js/es.js ./
 	cp blockly/javascript_compressed.js ./
