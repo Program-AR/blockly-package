@@ -32,7 +32,7 @@ version: blockly
 	git push --tags
 	bower info blockly-package
 
-actualizar: blockly
+actualizar: blockly registrarActualizacion
 	@echo "${G}actualizando blockly a la última versión...${N}"
 	git submodule update --remote --merge
 	cp blockly/blockly_compressed.js ./
@@ -41,3 +41,6 @@ actualizar: blockly
 	cp blockly/msg/js/es.js ./
 	cp blockly/javascript_compressed.js ./
 	cp -R blockly/media ./
+
+registrarActualizacion:
+	@cd blockly && echo "$(shell date +%Y-%m-%d) - $(NOMBRE): $(VERSION) - Blockly commit SHA: $(shell git rev-parse HEAD) - Blockly commit date: $(shell git log -1 --date=short --pretty=format:%cd)" >> ../versionNotes.txt
