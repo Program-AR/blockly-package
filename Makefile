@@ -46,4 +46,4 @@ copiarArchivos:
 	cp -R blockly/media ./
 
 registrarActualizacion:
-	echo "$(shell date +%Y-%m-%d) - $(NOMBRE): $(VERSION) - Blockly commit SHA: $(shell cd blockly; git rev-parse HEAD) - Blockly commit date: $(shell cd blockly; git log -1 --date=short --pretty=format:%cd)" >> versionNotes.txt
+	echo "$(shell date +%Y-%m-%d) - $(NOMBRE) - Blockly commit SHA: $(shell cd blockly; git rev-parse HEAD) - Blockly commit date: $(shell cd blockly; git log -1 --date=short --pretty=format:%cd)" >> versionNotes.txt
