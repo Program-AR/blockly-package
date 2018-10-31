@@ -11,11 +11,12 @@ comandos:
 	@echo ""
 	@echo "${B}Comandos disponibles para ${G}${NOMBRE}${N} - ${Y} versión ${VERSION}${N}"
 	@echo ""
-	@echo "  ${Y}Para desarrolladores${N}"
+	@echo "  ${Y}Para desarrolladores (en orden)${N}"
 	@echo ""
 	@echo "    ${G}iniciar${N}         Instala todas las dependencias."
-	@echo "    ${G}version${N}         Incrementa la versión y publica el paquete bower."
 	@echo "    ${G}actualizar${N}      Actualiza la versión de blockly desde el repositorio."
+	@echo "    ${G}commit${N}          Commitea los cambios actuales (de la actualizacion)"
+	@echo "    ${G}version${N}         Incrementa la versión y publica el paquete bower."
 	@echo ""
 	@echo ""
 
@@ -44,6 +45,9 @@ copiarArchivos:
 	cp blockly/msg/js/es.js ./
 	cp blockly/javascript_compressed.js ./
 	cp -R blockly/media ./
+
+commit:
+	git commit -am "Actualizando blockly a versión de $(shell cd blockly; git log -1 --date=short --pretty=format:%cd)"
 
 registrarActualizacion:
 	echo "$(shell date +%Y-%m-%d) - $(NOMBRE) - Blockly commit SHA: $(shell cd blockly; git rev-parse HEAD) - Blockly commit date: $(shell cd blockly; git log -1 --date=short --pretty=format:%cd)" >> versionNotes.txt
