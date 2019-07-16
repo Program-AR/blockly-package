@@ -1,0 +1,12 @@
+/bower_components
+/node_modules
+/blockly
+/demos
+/dist
+/tests
+**/.gitkeep
+.gitignore
+.gitmodules
+bower.json
+Makefile
+.npmignore

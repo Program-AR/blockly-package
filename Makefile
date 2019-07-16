@@ -15,8 +15,8 @@ comandos:
 	@echo ""
 	@echo "    ${G}iniciar${N}         Instala todas las dependencias."
 	@echo "    ${G}actualizar${N}      Actualiza la versión de blockly desde el repositorio."
-	@echo "    ${G}commit${N}          Commitea los cambios actuales (de la actualizacion)"
-	@echo "    ${G}version${N}         Incrementa la versión y publica el paquete bower."
+	@echo "    ${G}commit${N}          Commitea los cambios actuales (de la actualizacion)."
+	@echo "    ${G}version${N}         Incrementa la versión y publica el paquete."
 	@echo ""
 	@echo ""
 
@@ -31,7 +31,6 @@ version: blockly
 	npm version patch
 	git push --all
 	git push --tags
-	bower info blockly-package
 
 actualizar: blockly registrarActualizacion
 	@echo "${G}actualizando blockly a la última versión...${N}"

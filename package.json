@@ -8,12 +8,21 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hugoruscitti/blockly-package.git"
+    "url": "git+https://github.com/program-ar/blockly-package.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": {
+    "name": "Program.AR",
+    "email": "info@program.ar",
+    "url": "http://program.ar"
+  },
+  "contributors": [
+    "Hugo Ruscitti <hugoruscitti@gmail.com> (http://www.examplelab.com.ar/)",
+    "Alfredo Sanzo <alfredo.sanzo@gmail.com> (https://www.linkedin.com/in/alfredo-sanzo-13a9785/)",
+    "Lucas Alan Silvestri <silvestrilucasalan@gmail.com> (https://github.com/51lv3str1)"
+  ],
+  "license": "LGPL-3.0",
   "bugs": {
-    "url": "https://github.com/hugoruscitti/blockly-package/issues"
+    "url": "https://github.com/program-ar/blockly-package/issues"
   },
-  "homepage": "https://github.com/hugoruscitti/blockly-package#readme"
+  "homepage": "https://github.com/program-ar/blockly-package#readme"
 }
