@@ -1,4 +1,4 @@
-NOMBRE="blockly-package"
+NAME="blockly-package"
 VERSION=$(shell git describe --abbrev=0 --tags)
 
 N=[0m
@@ -7,37 +7,27 @@ Y=[01;33m
 B=[01;34m
 L=[01;30m
 
-comandos:
+commands:
 	@echo ""
-	@echo "${B}Comandos disponibles para ${G}${NOMBRE}${N} - ${Y} versión ${VERSION}${N}"
+	@echo "${G}${NAME}${N} - ${Y} version ${VERSION}${N}"
 	@echo ""
-	@echo "  ${Y}Para desarrolladores (en orden)${N}"
+	@echo "    ${G}initial_blockly${N}   Clones blockly from this project's last release"
+	@echo "    ${G}latest_blockly${N}    Updates blockly to its latest release"
 	@echo ""
-	@echo "    ${G}iniciar${N}         Instala todas las dependencias."
-	@echo "    ${G}actualizar${N}      Actualiza la versión de blockly desde el repositorio."
-	@echo "    ${G}commit${N}          Commitea los cambios actuales (de la actualizacion)."
-	@echo "    ${G}version${N}         Incrementa la versión y publica el paquete."
-	@echo ""
+	@echo "${G}What you will normally want to do, in order:${N}"
+	@echo "    ${G}update${N}            Updates blockly & copies correspondant files"
+	@echo "    ${G}release${N}           Publishes new version, logging date"
 	@echo ""
 
-iniciar:
-	@echo "${G}instalando dependencias...${N}"
+initial_blockly:
+	@echo "${G}Cloning Blockly used for this project's last release...${N}"
 	git submodule update --init
 
-blockly: iniciar
-
-version: blockly
-	@echo "${G}generando una versión nueva...${N}"
-	npm version patch
-	git push --all
-	git push --tags
-
-actualizar: blockly registrarActualizacion
-	@echo "${G}actualizando blockly a la última versión...${N}"
+latest_blockly:
+	@echo "${G}Updating Blockly to its very last version...${N}"
 	git submodule update --remote --merge
-	make copiarArchivos
 
-copiarArchivos:
+copy:
 	cp blockly/blockly_compressed.js ./
 	cp blockly/blockly_uncompressed.js ./
 	cp blockly/blocks_compressed.js ./
@@ -46,7 +36,15 @@ copiarArchivos:
 	cp -R blockly/media ./
 
 commit:
-	git commit -am "Actualizando blockly a versión de $(shell cd blockly; git log -1 --date=short --pretty=format:%cd)"
+	git commit -am "Updating blockly to version from $(shell cd blockly; git log -1 --date=short --pretty=format:%cd)"
 
-registrarActualizacion:
-	echo "$(shell date +%Y-%m-%d) - $(NOMBRE) - Blockly commit SHA: $(shell cd blockly; git rev-parse HEAD) - Blockly commit date: $(shell cd blockly; git log -1 --date=short --pretty=format:%cd)" >> versionNotes.txt
+register_update:
+	echo "$(shell date +%Y-%m-%d) - $(NAME) - Blockly commit SHA: $(shell cd blockly; git rev-parse HEAD) - Blockly commit date: $(shell cd blockly; git log -1 --date=short --pretty=format:%cd)" >> versionNotes.txt
+
+update: initial_blockly latest_blockly copy 
+
+release: register_update commit
+	@echo "${G}Publishing new version${N}"
+	npm version patch
+	git push --all
+	git push --tags
