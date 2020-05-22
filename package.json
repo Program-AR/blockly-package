@@ -17,8 +17,6 @@
   },
   "homepage": "https://github.com/hugoruscitti/blockly-package#readme",
   "dependencies": {
-    "blockly": "^3.20200402.1",
-    "install": "^0.13.0",
-    "npm": "^6.14.5"
+    "blockly": "^3.20200402.1"
   }
 }
