@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/hugoruscitti/blockly-package/issues"
   },
-  "homepage": "https://github.com/hugoruscitti/blockly-package#readme"
+  "homepage": "https://github.com/hugoruscitti/blockly-package#readme",
+  "dependencies": {
+    "blockly": "^3.20200402.1"
+  }
 }
